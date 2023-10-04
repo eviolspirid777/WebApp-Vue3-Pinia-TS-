@@ -181,34 +181,29 @@ export default defineComponent({
     });
 
     const submit = async () => {
-      if(!props.currentStudent){
-        selectedStudent.value = {
-          id:selectedStudent.value.id,
-          name:selectedStudent.value.name,
-          surname:selectedStudent.value.surname,
-          patron:selectedStudent.value.patron,
-          faculty:selectedStudent.value.faculty,
-          specialty:selectedStudent.value.specialty,
-          course:selectedStudent.value.course,
-          group:selectedStudent.value.group,
-          city: {
-            id: store.allCities.find((city: City) => selectedStudent.value.city?.country === city.country)?.id || undefined,
-            country: store.allCities.find((city: City) => selectedStudent.value.city?.country === city.country)
-          },
-          postalCode:selectedStudent.value.postalCode,
-          street:selectedStudent.value.street,
-          phone:selectedStudent.value.phone,
-          email:selectedStudent.value.email
-        }
+      selectedStudent.value = {
+        id:selectedStudent.value.id,
+        name:selectedStudent.value.name,
+        surname:selectedStudent.value.surname,
+        patron:selectedStudent.value.patron,
+        faculty:selectedStudent.value.faculty,
+        specialty:selectedStudent.value.specialty,
+        course:selectedStudent.value.course,
+        group:selectedStudent.value.group,
+        city:{
+          id: store.allCities.find((city: City) => selectedStudent.value.city === city.country)?.id || undefined,
+          country: store.allCities.find((city: City) => selectedStudent.value.city === city.country)?.country
+        },
+        postalCode:selectedStudent.value.postalCode,
+        street:selectedStudent.value.street,
+        phone:selectedStudent.value.phone,
+        email:selectedStudent.value.email
+      }
+      if(Object.keys(props.currentStudent).length === 0){
         await store.addStudent(selectedStudent.value);
       }
       else {
-        const matchingCity = store.allCities.find((city:City) => selectedStudent.value.city?.country === city.country)
-        if (selectedStudent.value.city && matchingCity) {
-          selectedStudent.value.city.id = matchingCity?.id;
-        }
         await store.updateStudent(selectedStudent.value)
-        console.log(selectedStudent.value)
       }
       await store.refreshStudents();
       close();

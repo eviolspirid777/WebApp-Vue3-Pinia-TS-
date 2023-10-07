@@ -16,12 +16,7 @@ export const useStudentsStore = defineStore('studentsStore', () => {
     const sortName = ref<string>('');
     const sortAscer = ref<boolean>(true);
   
-    const allCities = computed(() => cities.value);
-    const allStudents = computed(() => students.value);
-    const sortedProperty = computed(() => sortName.value);
-    const sortAsc = computed(() => sortAscer.value);
-  
-    const addStudent = async (studentData:any) => {
+    const addStudent = async (studentData:Student) => {
       await DataClient.postStudent(studentData);
       await refreshStudents();
     }
@@ -54,7 +49,7 @@ export const useStudentsStore = defineStore('studentsStore', () => {
       refreshCities();
     }
   
-    const updateStudent = async (studentData:any) => {
+    const updateStudent = async (studentData:Student) => {
       await DataClient.updateStudentData(studentData);
     }
   
@@ -62,7 +57,7 @@ export const useStudentsStore = defineStore('studentsStore', () => {
       await DataClient.updateCityData(city);
     }
 
-    const sortStudents = async (sortOpt: SortOptions) => {    //можно упростить
+    const sortStudents = async (sortOpt: SortOptions) => {
       sortName.value = sortOpt.name;
       sortAscer.value = sortOpt.asc;
       const studentsData = await DataClient.getAllData('', sortName.value, sortAscer.value);
@@ -72,17 +67,17 @@ export const useStudentsStore = defineStore('studentsStore', () => {
     const filterStudents = async (nameFilt:string) => {
       studName.value = nameFilt;
       const filter = studName.value;
-      const sortBy = sortedProperty.value;
+      const sortBy = sortName.value;
       const sortAsc = sortAscer.value;
       const studentsData = await DataClient.getAllData(filter, sortBy, sortAsc);
       setStudents(studentsData);
     }
   
-    const setStudents = (studentsData:any) => {
+    const setStudents = (studentsData:Student[]) => {
       students.value = studentsData;
     }
   
-    const setCities = (citiesData:any) => {
+    const setCities = (citiesData:City[]) => {
       cities.value = citiesData;
     }
   
@@ -92,10 +87,10 @@ export const useStudentsStore = defineStore('studentsStore', () => {
       studName,
       sortName,
       sortAscer,
-      allCities,
-      allStudents,
-      sortedProperty,
-      sortAsc,
+      // allCities,
+      // allStudents,
+      // sortedProperty,
+      // sortAsc,
       addStudent,
       addCity,
       refreshStudents,

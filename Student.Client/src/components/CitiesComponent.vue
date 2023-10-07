@@ -43,7 +43,7 @@ export default defineComponent({
       { key: "country", label: "Город" }
     ]);
 
-    const sendAllCities = computed(() => store.allCities);
+    const sendAllCities = computed(() => store.cities);
 
     const closeModalWindow = () => {
       selectedCity.value = {id:undefined, country:undefined};
@@ -56,7 +56,6 @@ export default defineComponent({
 
     const editCity = (city:City) => {
       selectedCity.value = city;
-      console.log(selectedCity.value);
       showModal.value = true;
     };
 

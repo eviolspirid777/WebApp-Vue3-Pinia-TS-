@@ -43,27 +43,26 @@ export default defineComponent({
   props: {
     selectedcity: {
       type: Object as PropType<City>,
-      default: () => ({}),
-      required: false
+      default: () => ({})
     }
   },
   setup(props, { emit }) {
     const store = useStudentsStore();
     const formData = ref({...props.selectedcity});
 
-    const submit = async () => {
-      // for (const key in formData.value) {
-      //   if (formData.value[key] === "") {
-      //     alert(`Пожалуйста заполните ${key} поле!`);
-      //     return;
-      //   }
-      // }
+    const checkCity = (city:City) => {
+     return city.country === undefined ?  true : false
+    }
 
-      if (Object.keys(props.selectedcity).length === 0) {
+    const submit = async () => {
+      if (checkCity(props.selectedcity)) {
+        console.log(props.selectedcity);
         console.log("addMethod");
-        await store.addCity( formData.value);
+        await store.addCity(formData.value);
       } else {
-        await store.updateCity( formData.value);
+        console.log(props.selectedcity);
+        console.log("updateMethod");
+        await store.updateCity(formData.value);
       }
       await store.refreshCities();
       close();
@@ -183,4 +182,3 @@ export default defineComponent({
   margin-bottom: 20px;
 }
 </style>
-@/stores/ыtudentsStore

@@ -154,7 +154,7 @@ export default defineComponent({
   },
   setup(props, {emit}) {
     const store = useStudentsStore();
-    const selectedStudent = ref<any>(props.currentStudent ? { ...props.currentStudent } : {
+    const selectedStudent = ref<Student>(props.currentStudent ? { ...props.currentStudent } : {
       id: 0,
       name: "",
       surname: "",
@@ -170,7 +170,7 @@ export default defineComponent({
       email: ""
     });
 
-    const getAllCities = computed(() => store.allCities);
+    const getAllCities = computed(() => store.cities);
 
     const cities = computed(() => {
       return getAllCities.value.map((city: City) => city.country);
@@ -191,8 +191,8 @@ export default defineComponent({
         course:selectedStudent.value.course,
         group:selectedStudent.value.group,
         city:{
-          id: store.allCities.find((city: City) => selectedStudent.value.city === city.country)?.id || undefined,
-          country: store.allCities.find((city: City) => selectedStudent.value.city === city.country)?.country
+          id: store.cities.find((city: City) => selectedStudent.value.city === city.country)?.id || undefined,
+          country: store.cities.find((city: City) => selectedStudent.value.city === city.country)?.country
         },
         postalCode:selectedStudent.value.postalCode,
         street:selectedStudent.value.street,
@@ -315,4 +315,4 @@ export default defineComponent({
 .label-input {
   margin-bottom: 20px;
 }
-</style>@/stores/ыtudentsStore
+</style>

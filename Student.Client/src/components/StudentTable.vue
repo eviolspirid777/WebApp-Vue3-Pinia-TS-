@@ -67,9 +67,9 @@ export default defineComponent({
     ];
 
     const formattedStudents = computed(() => {
-      return store.allStudents.map((student: any) => ({
+      return store.students.map((student: Student) => ({
         ...student,
-        city: student.city.country ?? undefined,
+        city: student.city?.country ?? undefined,
       }));
     });
 
@@ -134,4 +134,4 @@ export default defineComponent({
     };
   },
 });
-</script>@/stores/ыtudentsStore
+</script>

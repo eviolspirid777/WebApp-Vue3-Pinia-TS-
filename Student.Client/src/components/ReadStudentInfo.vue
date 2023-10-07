@@ -55,7 +55,7 @@ export default defineComponent({
   setup() {
     const store = useStudentsStore();
     const route = useRoute();
-    const allStudents = computed(() => store.allStudents);
+    const allStudents = computed(() => store.students);
 
     const studentData =  computed(() => {
       const id = route.params.studentId;
@@ -110,4 +110,4 @@ export default defineComponent({
   text-shadow: 1px 1px 1px rgb(42, 100, 245);
   cursor: pointer;
 }
-</style>@/stores/ыtudentsStore
+</style>

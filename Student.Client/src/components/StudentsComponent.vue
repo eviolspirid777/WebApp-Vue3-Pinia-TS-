@@ -43,7 +43,7 @@ export default defineComponent({
     const showModal = ref(false);
 
     const getAllStudents = computed(() => {
-      return studentsStore.allStudents;
+      return studentsStore.students;
     });
 
     const debouncedFilter = _.debounce(() => {
@@ -106,4 +106,4 @@ export default defineComponent({
   height: 40px;
   background-color: white;
 }
-</style>../stores/ыtudentsStore
+</style>

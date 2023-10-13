@@ -15,7 +15,6 @@
       />
       <input
         v-model="nameFilter"
-        style="margin-left: 10px;"
         class="form-control-m-2"
         placeholder="Фильтр"
         @input="debouncedFilter()"
@@ -70,18 +69,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
-
-.form-control-m-2{
-  width:100px;
-  padding-left: 20px;
-}
-
-.modal-mask{
-  border-style: groove;
-  border-color: 15,83,252;
-}
-
+<style scoped lang="scss">
 .btn-own-cls{
   border-radius: 4px;
   border-color: rgba(15, 83, 252);
@@ -89,15 +77,14 @@ export default defineComponent({
   color: rgba(15, 83, 252);
   height: 40px;
   background-color: white;
-}
 
-.btn-own-cls:hover {
-  background-color: rgba(15, 83, 252, 1);
-  cursor: pointer;
-  color: white;
-  box-shadow: 2px 3px 8px #007bff;
+  &:hover{
+    background-color: rgba(15, 83, 252, 1);
+    cursor: pointer;
+    color: white;
+    box-shadow: 2px 3px 8px #007bff;
+  }
 }
-
 .form-control-m-2{
   margin-left: 10px;
   width: 100px;
@@ -105,5 +92,8 @@ export default defineComponent({
   border: 2px solid rgba(15, 83, 252);
   height: 40px;
   background-color: white;
+}
+input{
+  margin-left: 10px;
 }
 </style>

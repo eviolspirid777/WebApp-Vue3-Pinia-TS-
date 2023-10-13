@@ -30,15 +30,16 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, reactive} from "vue";
+import {defineComponent} from "vue";
 
 export default defineComponent({
   name: 'App',
 });
 </script>
 
-<style>
+<style lang="scss">
   @import url('https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css');
+
   .headerClass{
     color: rgb(255, 255, 255);
     text-shadow: 1px 1px 5px rgba(15, 83, 252, 1), 1px 1px 10px rgb(19, 38, 87);
@@ -54,12 +55,13 @@ export default defineComponent({
     background-color: white;
     text-decoration: none;
     margin-right: 10px;
-  }
-  .routLink:hover{
-    background-color: rgba(15, 83, 252, 1);
-    cursor: pointer;
-    color: white;
-    box-shadow: 2px 3px 8px #007bff;
+
+    &:hover{
+      background-color: rgba(15, 83, 252, 1);
+      cursor: pointer;
+      color: white;
+      box-shadow: 2px 3px 8px #007bff;
+    }
   }
   .router-view{
     margin-top: 20px;

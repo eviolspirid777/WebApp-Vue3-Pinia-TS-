@@ -84,21 +84,21 @@ export default defineComponent({
     };
 
     const closeModalWindow = () => {
-      selectedStudent.value = {
-      id: 0,
-      name: "",
-      surname: "",
-      patron: "",
-      faculty: "",
-      specialty: "",
-      course: "",
-      group: "",
-      city: { id: 0, country: "" },
-      postalCode: "",
-      street: "",
-      phone: "",
-      email: ""
-    };
+    //   selectedStudent.value = {
+    //   id: 0,
+    //   name: "",
+    //   surname: "",
+    //   patron: "",
+    //   faculty: "",
+    //   specialty: "",
+    //   course: "",
+    //   group: "",
+    //   city: { id: 0, country: "" },
+    //   postalCode: "",
+    //   street: "",
+    //   phone: "",
+    //   email: ""
+    // };
       showModal.value = false;
     };
 

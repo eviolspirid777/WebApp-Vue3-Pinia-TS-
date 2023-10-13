@@ -5,16 +5,11 @@
         <h1 class="header">
           Данные о городе
         </h1>
-        <hr style="color:rgb(46, 73, 108)">
-        <label
-          for="city"
-          class="label-input"
-        >Город:</label>
-        <input
-          id="city"
-          v-model="selData.country"
-          type="text"
-        >
+        <hr>
+        <div v-for="keyOpt in option" :key="keyOpt.key">
+          <label class="label-input" :for="keyOpt.key">{{ keyOpt.label }}</label>
+          <input class="input-cls" type="text" :id="keyOpt.key" v-model="selData.country">
+        </div>
         <div class="modal-footer">
           <button
             class="btn-own-cls"
@@ -49,6 +44,9 @@ export default defineComponent({
   setup(props, { emit }) {
     const store = useStudentsStore();
     const formData = ref({...props.selectedcity});
+    const option = ref([
+      {key:"city", label:"Город"},
+    ])
 
     const checkCity = (city:City) => {
      return city.country === undefined ?  true : false
@@ -83,84 +81,87 @@ export default defineComponent({
       formData,
       selData,
       submit,
-      close
+      close,
+      option
     };
   }
 });
 </script>
 
-<style scoped>
-.modal-mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+<style scoped lang="scss">
+.modal {
+  &-mask{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.modal-wrapper {
-  max-width: 500px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-  box-shadow: 1px 1px 20px #007bff;
-}
+  &-wrapper{
+    max-width: 500px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 20px #007bff;
+  }
 
-.modal-container {
-  border-radius: 10px;
-  background-color: rgba(46, 73, 108, 0.87);
-  padding: 20px;
-  text-align: left;
-}
+  &-container{
+    border-radius: 10px;
+    background-color: rgba(46, 73, 108, 0.87);
+    padding: 20px;
+    text-align: left;
+  }
 
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px;
-  justify-content: space-between;
-}
+  &-footer{
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    justify-content: space-between;
+  }
 
-.modal-enter-active,
-.modal-leave-active {
-  transition: opacity 0.3s ease;
-}
+  &-enter-active, &-leave-active{
+    transition: opacity 0.3s ease;
+  }
 
-.modal-enter,
-.modal-leave-to {
-  opacity: 0;
-}
+  &-enter, &-leave-to{
+    opacity: 0;
+  }
 
+  &-container label{
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #ffffffd3;
+  }
+
+  &-container input,select{
+    width: 200px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: rgba(19, 38, 87, 0.308);
+    color: #fff;
+  }
+}
+hr{
+  color:rgb(46, 73, 108)
+}
 .header {
   padding-bottom: 10px;
   font-size: 30px;
   margin-left: 22%;
   color: rgb(221, 221, 255);
   text-shadow: 1px 1px 5px rgba(15, 83, 252, 1), 1px 1px 10px rgb(19, 38, 87);
-}
-
-.modal-container label {
-  display: inline-block;
-  width: 150px;
-  text-align: right;
-  margin-right: 10px;
-  font-weight: bold;
-  font-size: 16px;
-  color: #ffffffd3;
-}
-
-.modal-container input, select {
-  width: 200px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 16px;
-  background-color: rgba(19, 38, 87, 0.308);
-  color: #fff;
 }
 
 .btn-own-cls {
@@ -172,13 +173,16 @@ export default defineComponent({
   color: white;
   cursor: pointer;
   border-radius: 4px;
-}
 
-.btn-own-cls:not(:last-child) {
-  margin-right: 10px;
+  &:not(:last-child){
+    margin-right: 10px;
+  }
 }
 
 .label-input {
   margin-bottom: 20px;
+}
+.input-cls {
+  margin-right: 20px;
 }
 </style>

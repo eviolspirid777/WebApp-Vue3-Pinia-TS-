@@ -80,3 +80,18 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped lang="scss">
+.btn-own-cls{
+  border: 2px solid rgba(15, 83, 252);
+  border-radius: 4px;
+  border-color: rgba(15, 83, 252);
+  transition: background-color 0.3s ease;
+  background-color: white;
+  color: rgba(15, 83, 252);
+  &:hover{
+    background-color: rgba(15, 83, 252);
+    color: white;
+  }
+}
+</style>

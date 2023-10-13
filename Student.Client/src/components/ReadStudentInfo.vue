@@ -3,8 +3,8 @@
     <h3 class="tag-header">
       Информация о студенте
     </h3>
-    <hr style="height: 2px; color:rgba(15, 82, 252, 0.849) ;">
-    <p>
+    <hr>
+    <!-- <p>
       <label>Фамилия: {{ studentData?.surname }}</label>
     </p>
     <p>
@@ -39,7 +39,13 @@
     </p>
     <p>
       <label>Почта: {{ studentData?.email }}</label>
-    </p>
+    </p> -->
+    <div>
+      <p v-for="(value, key) in studentData" :key="key">
+        <label v-if="key === 'city'">city: {{ value?.country }}</label>
+        <label v-else>{{ key }}: {{ value }}</label>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -76,7 +82,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .student-box{
   border: 2px solid rgba(15, 83, 252);
   border-radius: 20px;
@@ -84,9 +90,31 @@ export default defineComponent({
   align-items: center;
   transition: box-shadow 0.6s ease-in-out;
   box-shadow: 4px 3px 25px 1px rgba(15, 83, 252, 0.2);
+
+  &:hover{
+    box-shadow: 4px 3px 25px 1px rgba(15, 83, 252, 0.8);
+  }
+
+  & p{
+    align-items: center;
+    padding-left: 40px;
+  }
+
+  & p > label{
+    font-size: large;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+    &:hover{
+      transition: color 0.4s ease-in-out, text-shadow 0.2s ease-in-out;
+      color: rgba(15, 83, 252, 1);
+      text-shadow: 1px 1px 1px rgb(42, 100, 245);
+      cursor: pointer;
+    }
+  }
 }
-.student-box:hover{
-  box-shadow: 4px 3px 25px 1px rgba(15, 83, 252, 0.8);
+hr{
+  height: 2px;
+  color:rgba(15, 82, 252, 0.849);
 }
 .tag-header{
   padding-bottom: 10px;
@@ -95,19 +123,5 @@ export default defineComponent({
   margin-left: 22%;
   color: rgb(221, 221, 255);
   text-shadow: 1px 1px 5px rgba(15, 83, 252, 1), 1px 1px 10px rgb(19, 38, 87);
-}
-.student-box p{
-  align-items: center;
-  padding-left: 40px;
-}
-.student-box p > label{
-  font-size: large;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-.student-box p > label:hover{
-  transition: color 0.4s ease-in-out, text-shadow 0.2s ease-in-out;
-  color: rgba(15, 83, 252, 1);
-  text-shadow: 1px 1px 1px rgb(42, 100, 245);
-  cursor: pointer;
 }
 </style>

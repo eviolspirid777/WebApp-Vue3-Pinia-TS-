@@ -6,120 +6,18 @@
           Данные о студенте
         </h1>
         <hr>
-        <label
-          for="surname"
-          class="label-input"
-        >Фамилия:</label>
-        <input
-          id="surname"
-          v-model="selectedStudent.surname"
-          type="text"
-        >
-        <label
-          for="name"
-          class="label-input"
-        >Имя:</label>
-        <input
-          id="name"
-          v-model="selectedStudent.name"
-          type="text"
-        >
-        <label
-          for="patron"
-          class="label-input"
-        >Отчество:</label>
-        <input
-          id="patron"
-          v-model="selectedStudent.patron"
-          type="text"
-        >
-        <label
-          for="fac"
-          class="label-input"
-        >Факультет:</label>
-        <input
-          id="fac"
-          v-model="selectedStudent.faculty"
-          type="text"
-        >
-        <label
-          for="specialty"
-          class="label-input"
-        >Специальность:</label>
-        <input
-          id="specialty"
-          v-model="selectedStudent.specialty"
-          type="text"
-        >
-        <label
-          for="course"
-          class="label-input"
-        >Курс:</label>
-        <input
-          id="course"
-          v-model="selectedStudent.course"
-          type="text"
-        >
-        <label
-          for="group"
-          class="label-input"
-        >Группа:</label>
-        <input
-          id="group"
-          v-model="selectedStudent.group"
-          type="text"
-        >
-        <label
-          for="city"
-          class="label-input"
-        >Город:</label>
-        <select
-          id="city"
-          v-model="selectedStudent.city"
-        >
-          <option
-            v-for="item in cities"
-            :key="item"
-          >
-            {{ item }}
-          </option>
-        </select>
-        <label
-          for="postindx"
-          class="label-input"
-        >Почтовый индекс:</label>
-        <input
-          id="postindx"
-          v-model="selectedStudent.postalCode"
-          type="text"
-        >
-        <label
-          for="street"
-          class="label-input"
-        >Улица:</label>
-        <input
-          id="street"
-          v-model="selectedStudent.street"
-          type="text"
-        >
-        <label
-          for="telephone"
-          class="label-input"
-        >Телефон:</label>
-        <input
-          id="telephone"
-          v-model="selectedStudent.phone"
-          type="text"
-        >
-        <label
-          for="post"
-          class="label-input"
-        >Почта:</label>
-        <input
-          id="post"
-          v-model="selectedStudent.email"
-          type="text"
-        >
+        <div v-for="(data, key) in selectedStudent" :key="key" class="label-input">
+          <div v-if="key !== 'city' && key !== 'id'">
+            <label :for="data">{{ key }}</label>
+            <input type="text" :id="data" v-model="selectedStudent[key]">
+          </div>
+          <div v-else-if="key === 'city'">
+            <label>city:</label>
+            <select id="city" v-model="selectedStudent.city.country">
+              <option v-for="(item,key) in cities" :key="key">{{ item.country }}</option>
+            </select>
+          </div>
+        </div>
         <div class="modal-footer">
           <button
             class="btn-own-cls"
@@ -140,12 +38,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, computed, onMounted } from 'vue';
+import { defineComponent, PropType, ref, computed, onMounted, defineEmits } from 'vue';
 import { useStudentsStore } from '@/stores/studentsStore';
+import { useCitiesStore } from '@/stores/citiesStore';
 import { Student } from '@/types/dataTypes/iStudent'
 import { City } from '@/types/dataTypes/iCity';
+import _ from "lodash"
 
 export default defineComponent({
+  emits:["close"],
+
   props: {
     currentStudent: {
       type: Object as PropType<Student>,
@@ -153,8 +55,9 @@ export default defineComponent({
     }
   },
   setup(props, {emit}) {
-    const store = useStudentsStore();
-    const selectedStudent = ref<Student>(props.currentStudent ? { ...props.currentStudent } : {
+    const studentsStore = useStudentsStore();
+    const citiesStore = useCitiesStore();
+    const selectedStudent = ref<Student>(Object.keys(props.currentStudent).length !== 0 ? _.cloneDeep(props.currentStudent) : {
       id: 0,
       name: "",
       surname: "",
@@ -170,43 +73,36 @@ export default defineComponent({
       email: ""
     });
 
-    const getAllCities = computed(() => store.cities);
-
+    const getAllCities = computed(() => citiesStore.cities);
+    
     const cities = computed(() => {
-      return getAllCities.value.map((city: City) => city.country);
+      return getAllCities.value
     });
 
     onMounted(async () => {
-      await store.refreshCities();
+      await citiesStore.fetchCities();
     });
 
     const submit = async () => {
-      selectedStudent.value = {
-        id:selectedStudent.value.id,
-        name:selectedStudent.value.name,
-        surname:selectedStudent.value.surname,
-        patron:selectedStudent.value.patron,
-        faculty:selectedStudent.value.faculty,
-        specialty:selectedStudent.value.specialty,
-        course:selectedStudent.value.course,
-        group:selectedStudent.value.group,
+      selectedStudent.value = {...selectedStudent.value,
         city:{
-          id: store.cities.find((city: City) => selectedStudent.value.city === city.country)?.id || undefined,
-          country: store.cities.find((city: City) => selectedStudent.value.city === city.country)?.country
-        },
-        postalCode:selectedStudent.value.postalCode,
-        street:selectedStudent.value.street,
-        phone:selectedStudent.value.phone,
-        email:selectedStudent.value.email
+          id: citiesStore.cities.find((city: City) => selectedStudent.value.city?.country === city.country)?.id,
+          country: selectedStudent.value.city?.country
+        }
       }
-      if(Object.keys(props.currentStudent).length === 0){
-        await store.addStudent(selectedStudent.value);
-      }
+      if (Object.values(selectedStudent.value).some(value => value === "" || value === null || value === undefined)) {
+        alert("Заполните все поля в форме!");
+      } 
       else {
-        await store.updateStudent(selectedStudent.value)
+        if (Object.keys(props.currentStudent).length === 0) {
+          await studentsStore.addStudent(selectedStudent.value);
+        }
+        else {
+          await studentsStore.updateStudent(selectedStudent.value);
+        }
+        await studentsStore.fetchStudents();
+        close();
       }
-      await store.refreshStudents();
-      close();
     };
 
     const close = () => {
@@ -215,6 +111,7 @@ export default defineComponent({
   
     return {
       selectedStudent,
+      getAllCities,
       cities,
       submit,
       close

@@ -4,53 +4,15 @@
       Информация о студенте
     </h3>
     <hr>
-    <!-- <p>
-      <label>Фамилия: {{ studentData?.surname }}</label>
+    <p v-for="(value, key) in studentData" :key="key">
+      <label v-if="key === 'city'">city: {{ value?.country }}</label>
+      <label v-else>{{ key }}: {{ value }}</label>
     </p>
-    <p>
-      <label>Имя: {{ studentData?.name }}</label>
-    </p>
-    <p>
-      <label>Отчество: {{ studentData?.patron }}</label>
-    </p>
-    <p>
-      <label>Факультет: {{ studentData?.faculty }}</label>
-    </p>
-    <p>
-      <label>Специальность: {{ studentData?.specialty }}</label>
-    </p>
-    <p>
-      <label>Курс: {{ studentData?.course }}</label>
-    </p>
-    <p>
-      <label>Группа: {{ studentData?.group }}</label>
-    </p>
-    <p>
-      <label>Город: {{ studentData?.city?.country }}</label>
-    </p>
-    <p>
-      <label>Почтовый индекс: {{ studentData?.postalCode }}</label>
-    </p>
-    <p>
-      <label>Улица: {{ studentData?.street }}</label>
-    </p>
-    <p>
-      <label>Телефон: {{ studentData?.phone }}</label>
-    </p>
-    <p>
-      <label>Почта: {{ studentData?.email }}</label>
-    </p> -->
-    <div>
-      <p v-for="(value, key) in studentData" :key="key">
-        <label v-if="key === 'city'">city: {{ value?.country }}</label>
-        <label v-else>{{ key }}: {{ value }}</label>
-      </p>
-    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, onMounted, PropType } from 'vue';
+import { defineComponent, computed, onMounted } from 'vue';
 import { useStudentsStore } from '@/stores/studentsStore';
 import { useRoute } from 'vue-router';
 import { Student } from '@/types/dataTypes/iStudent';
@@ -59,19 +21,18 @@ import { Student } from '@/types/dataTypes/iStudent';
 export default defineComponent({
   name: 'StudentInfo',
   setup() {
-    const store = useStudentsStore();
+    const studentsStore = useStudentsStore();
     const route = useRoute();
-    const allStudents = computed(() => store.students);
+    const allStudents = computed(() => studentsStore.students);
 
     const studentData =  computed(() => {
       const id = route.params.studentId;
       const selectedStudent: Student | undefined =  allStudents.value.find(student => typeof id === 'string' && student.id?.toString() === id);
-      console.log(selectedStudent);
       return selectedStudent;
     });
 
     onMounted(async () => {
-      await store.refreshStudents();
+      await studentsStore.fetchStudents();
     });
 
     return {

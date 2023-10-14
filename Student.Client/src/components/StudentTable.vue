@@ -31,7 +31,7 @@ export default defineComponent({
     ModalForm,
   },
   setup() {
-    const store = useStudentsStore();
+    const studentsStore = useStudentsStore();
     const router = useRouter();
     const showModal = ref <boolean>(false);
     const selectedStudent = ref <Student>({
@@ -51,7 +51,6 @@ export default defineComponent({
     });
     const nameFilter = ref<string>('');
     const tableFields = [
-      { key: 'id', label: 'id' },
       { key: 'surname', label: 'Фамилия' },
       { key: 'name', label: 'Имя' },
       { key: 'patron', label: 'Отчество' },
@@ -67,14 +66,11 @@ export default defineComponent({
     ];
 
     const formattedStudents = computed(() => {
-      return store.students.map((student: Student) => ({
-        ...student,
-        city: student.city?.country ?? undefined,
-      }));
+      return studentsStore.students;
     });
 
     const refreshData = async () => {
-      await store.refreshStudents();
+      await studentsStore.fetchStudents();
     };
 
     const editStudent = (student: Student) => {
@@ -84,27 +80,12 @@ export default defineComponent({
     };
 
     const closeModalWindow = () => {
-    //   selectedStudent.value = {
-    //   id: 0,
-    //   name: "",
-    //   surname: "",
-    //   patron: "",
-    //   faculty: "",
-    //   specialty: "",
-    //   course: "",
-    //   group: "",
-    //   city: { id: 0, country: "" },
-    //   postalCode: "",
-    //   street: "",
-    //   phone: "",
-    //   email: ""
-    // };
       showModal.value = false;
     };
 
     const sortData = (name: string, asc: boolean) => {
       name = name.charAt(0).toUpperCase() + name.slice(1);
-      store.sortStudents({ name: name, asc: asc });
+      studentsStore.sortStudents({ name: name, asc: asc });
     };
 
     const openInformation = (student: Student) => {
@@ -112,7 +93,7 @@ export default defineComponent({
     };
 
     const deleteStudent = (id: number) => {
-      store.deleteStudent(id);
+      studentsStore.deleteStudent(id);
     };
 
     onMounted(async () => {

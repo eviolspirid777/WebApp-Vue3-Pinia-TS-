@@ -30,11 +30,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, computed, onMounted } from 'vue';
-import { useStudentsStore } from '@/stores/studentsStore';
+import { defineComponent, PropType, ref, computed, onMounted, defineEmits } from 'vue';
+import { useCitiesStore } from '@/stores/citiesStore';
 import { City } from '@/types/dataTypes/iCity';
 
 export default defineComponent({
+  emits:["close"],
+
   props: {
     selectedcity: {
       type: Object as PropType<City>,
@@ -42,7 +44,7 @@ export default defineComponent({
     }
   },
   setup(props, { emit }) {
-    const store = useStudentsStore();
+    const citiesStore = useCitiesStore();
     const formData = ref({...props.selectedcity});
     const option = ref([
       {key:"city", label:"Город"},
@@ -56,13 +58,13 @@ export default defineComponent({
       if (checkCity(props.selectedcity)) {
         console.log(props.selectedcity);
         console.log("addMethod");
-        await store.addCity(formData.value);
+        await citiesStore.addCity(formData.value);
       } else {
         console.log(props.selectedcity);
         console.log("updateMethod");
-        await store.updateCity(formData.value);
+        await citiesStore.updateCity(formData.value);
       }
-      await store.refreshCities();
+      await citiesStore.fetchCities();
       close();
     };
 

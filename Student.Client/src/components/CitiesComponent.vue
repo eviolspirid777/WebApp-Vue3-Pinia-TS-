@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted } from 'vue';
-import { useStudentsStore } from '@/stores/studentsStore';
+import { useCitiesStore } from '@/stores/citiesStore';
 import MainTable from "./MainTable.vue";
 import ModalForm from "./CityForm.vue";
 import { City } from '@/types/dataTypes/iCity';
@@ -35,7 +35,7 @@ export default defineComponent({
     ModalForm
   },
   setup() {
-    const store = useStudentsStore();
+    const citiesStore = useCitiesStore();
     const showModal = ref(false);
     const selectedCity = ref<City|undefined>({id:undefined, country:undefined});
     const nameFilter = ref("");
@@ -43,7 +43,7 @@ export default defineComponent({
       { key: "country", label: "Город" }
     ]);
 
-    const sendAllCities = computed(() => store.cities);
+    const sendAllCities = computed(() => citiesStore.cities);
 
     const closeModalWindow = () => {
       selectedCity.value = {id:undefined, country:undefined};
@@ -51,7 +51,7 @@ export default defineComponent({
     };
 
     const deleteCity = (id:number) => {
-      store.deleteCity(id);
+      citiesStore.deleteCity(id);
     };
 
     const editCity = (city:City) => {
@@ -60,7 +60,7 @@ export default defineComponent({
     };
 
     const refreshData = async () => {
-      await store.refreshCities();
+      await citiesStore.fetchCities();
     };
 
     onMounted(async () => {
@@ -94,4 +94,4 @@ export default defineComponent({
     color: white;
   }
 }
-</style>
+</style>@/stores/studentsStore

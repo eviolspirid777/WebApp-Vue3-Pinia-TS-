@@ -4,7 +4,7 @@
       <thead>
         <tr>
           <th
-            v-for="field in filteredTableFields"
+            v-for="field in columnsFields"
             :key="field.key"
             @click="sortData(field.key)"
           >
@@ -20,15 +20,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="data in rows"
-          :key="data.id"
-        >
-          <td
-            v-for="field in filteredTableFields"
-            :key="field.key"
-          >
-            {{ getValueFromKey(data, field.key) }}
+        <tr v-for="data in rows" :key="data.id">
+          <td v-for="field in columnsFields" :key="field.key">
+            {{ field.key !== "city" ? getValueFromKey(data, field.key) : getValueFromKey(data, field.key).country }}
           </td>
           <td>
             <div class="d-flex">
@@ -65,9 +59,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, computed, watch } from 'vue';
+import { defineComponent, PropType, ref, computed, watch, defineEmits } from 'vue';
+import _ from "lodash"
 
 export default defineComponent({
+  emits:["clickData", "delete", "sort", "refresh", "sendData"],
+
   props: {
     columns: {
       type: Array as PropType<any[]>,
@@ -78,13 +75,13 @@ export default defineComponent({
       default: () => []
     }
   },
-  setup(props, { emit }) {
+  setup(props, {emit}) {
     const cont = ref(0);
     const sortTitle = ref("");
     const cityCheck = ref(false);
 
-    const filteredTableFields = computed(() => {
-      return props.columns.filter((field: any) => field.key !== "id");
+    const columnsFields = computed(() => {
+      return _.cloneDeep(props.columns)
     });
 
     watch(
@@ -137,7 +134,7 @@ export default defineComponent({
       cont,
       sortTitle,
       cityCheck,
-      filteredTableFields,
+      columnsFields,
       getValueFromKey,
       editData,
       deleteData,

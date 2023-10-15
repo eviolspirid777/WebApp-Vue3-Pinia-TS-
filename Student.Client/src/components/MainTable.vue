@@ -60,6 +60,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, computed, watch, defineEmits } from 'vue';
+import {Columns} from "@/types/columnsRows/columns"
+import {Rows} from "@/types/columnsRows/rows"
 import _ from "lodash"
 
 export default defineComponent({
@@ -67,11 +69,11 @@ export default defineComponent({
 
   props: {
     columns: {
-      type: Array as PropType<any[]>,
+      type: Array as PropType<Columns[]>,
       default: () => []
     },
     rows: {
-      type: Array as PropType<any[]>,
+      type: Array as PropType<Rows[]>,
       default: () => []
     }
   },

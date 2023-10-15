@@ -32,7 +32,7 @@
 <script lang="ts">
 import { defineComponent, PropType, ref, computed, onMounted, defineEmits } from 'vue';
 import { useCitiesStore } from '@/stores/citiesStore';
-import { City } from '@/types/dataTypes/iCity';
+import { City } from '@/types/dataTypes/City';
 
 export default defineComponent({
   emits:["close"],
@@ -187,4 +187,4 @@ hr{
 .input-cls {
   margin-right: 20px;
 }
-</style>
+</style>@/types/dataTypes/City

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Student } from "@/types/dataTypes/iStudent";
+import { Student } from "@/types/dataTypes/Student";
 
 const API_URL = 'http://localhost:5000/api/student/';
 

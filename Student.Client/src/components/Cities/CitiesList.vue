@@ -25,9 +25,9 @@
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted } from 'vue';
 import { useCitiesStore } from '@/stores/citiesStore';
-import MainTable from "./MainTable.vue";
+import MainTable from "../MainTable.vue";
 import ModalForm from "./CityForm.vue";
-import { City } from '@/types/dataTypes/iCity';
+import { City } from '@/types/dataTypes/City';
 
 export default defineComponent({
   components: {
@@ -94,4 +94,4 @@ export default defineComponent({
     color: white;
   }
 }
-</style>@/stores/studentsStore
+</style>@/stores/studentsStore@/types/dataTypes/City

@@ -13,9 +13,10 @@
           </div>
           <div v-else-if="key === 'city'">
             <label>city:</label>
-            <select id="city" v-model="selectedStudent.city.country">
+            <select v-if="citiesChecker()" id="city" v-model="selectedStudent.city.country">
               <option v-for="(item,key) in cities" :key="key">{{ item.country }}</option>
             </select>
+            <input v-else type="text" v-model="selectedStudent.city.country"/>
           </div>
         </div>
         <div class="modal-footer">
@@ -41,13 +42,12 @@
 import { defineComponent, PropType, ref, computed, onMounted, defineEmits } from 'vue';
 import { useStudentsStore } from '@/stores/studentsStore';
 import { useCitiesStore } from '@/stores/citiesStore';
-import { Student } from '@/types/dataTypes/iStudent'
-import { City } from '@/types/dataTypes/iCity';
+import { Student } from '@/types/dataTypes/Student'
+import { City } from '@/types/dataTypes/City';
 import _ from "lodash"
 
 export default defineComponent({
   emits:["close"],
-
   props: {
     currentStudent: {
       type: Object as PropType<Student>,
@@ -74,6 +74,11 @@ export default defineComponent({
     });
 
     const getAllCities = computed(() => citiesStore.cities);
+
+    const citiesChecker = () =>{
+      var cities = citiesStore.cities
+      return Object.keys(cities).length !== 0 ? true : false
+    }
     
     const cities = computed(() => {
       return getAllCities.value
@@ -113,8 +118,9 @@ export default defineComponent({
       selectedStudent,
       getAllCities,
       cities,
+      citiesChecker,
       submit,
-      close
+      close,
     };
   }
 });
@@ -190,6 +196,10 @@ export default defineComponent({
 hr{
   color:rgb(46, 73, 108)
 }
+.add-city {
+  background-color: rgba(15, 82, 252, 0.551);
+  color: white;
+}
 .btn-own-cls {
   width: 120px;
   padding: 10px 20px;
@@ -214,4 +224,4 @@ hr{
 .label-input {
   margin-bottom: 20px;
 }
-</style>
+</style>@/types/dataTypes/City@/types/dataTypes/Student

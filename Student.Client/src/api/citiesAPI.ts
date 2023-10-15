@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { City } from '@/types/dataTypes/iCity';
+import { City } from '@/types/dataTypes/City';
 
 const API_CITIES = 'http://localhost:5000/api/student/cities/';
 

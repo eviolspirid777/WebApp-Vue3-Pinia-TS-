@@ -9,7 +9,7 @@
       @sendData="openInformation"
       @delete="deleteStudent" 
     />
-    <ModalForm
+    <StudentForm
       v-if="showModal"
       :current-student="selectedStudent"
       @close="closeModalWindow"
@@ -20,15 +20,15 @@
 <script lang="ts">
 import { defineComponent, computed, ref, onMounted } from 'vue';
 import MainTable from '@/components/MainTable.vue';
-import ModalForm from '@/components/ModalForm.vue';
+import StudentForm from '@/components/Students/StudentForm.vue';
 import { useStudentsStore } from '@/stores/studentsStore';
 import { useRouter } from 'vue-router';
-import { Student } from '@/types/dataTypes/iStudent';
+import { Student } from '@/types/dataTypes/Student';
 
 export default defineComponent({
   components: {
     MainTable,
-    ModalForm,
+    StudentForm,
   },
   setup() {
     const studentsStore = useStudentsStore();
@@ -115,4 +115,4 @@ export default defineComponent({
     };
   },
 });
-</script>
+</script>@/types/dataTypes/Student

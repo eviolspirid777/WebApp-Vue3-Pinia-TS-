@@ -9,7 +9,7 @@
       >
         Добавить студента
       </button>
-      <ModalForm
+      <StudentForm
         v-if="showModal"
         @close="studentFormSwitcher()"
       />
@@ -27,14 +27,14 @@
 <script lang="ts">
 import { defineComponent, computed, ref, onMounted } from 'vue';
 import _ from 'lodash';
-import ModalForm from '@/components/ModalForm.vue';
-import TableForm from '@/components/StudentTable.vue';
-import { useStudentsStore } from "../stores/studentsStore"
+import StudentForm from '@/components/Students/StudentForm.vue';
+import TableForm from '@/components/Students/StudentTable.vue';
+import { useStudentsStore } from "@/stores/studentsStore"
 
 export default defineComponent({
   components: {
     TableForm,
-    ModalForm,
+    StudentForm,
   },
   setup() {
     var studentsStore = useStudentsStore();

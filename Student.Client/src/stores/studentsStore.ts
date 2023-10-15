@@ -2,7 +2,7 @@ import {defineStore} from 'pinia';
 import {ref, Ref} from "vue";
 import {useStudentsClient} from "../api/studentsAPI"
 import { useCitiesStore } from './citiesStore';
-import { Student } from '@/types/dataTypes/iStudent';
+import { Student } from '@/types/dataTypes/Student';
 import { SortOptions } from '@/types/sortOptions/iSort';
 
 const DataClient = useStudentsClient();

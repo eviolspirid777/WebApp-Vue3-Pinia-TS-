@@ -15,7 +15,7 @@
 import { defineComponent, computed, onMounted } from 'vue';
 import { useStudentsStore } from '@/stores/studentsStore';
 import { useRoute } from 'vue-router';
-import { Student } from '@/types/dataTypes/iStudent';
+import { Student } from '@/types/dataTypes/Student';
 
 
 export default defineComponent({
@@ -85,4 +85,4 @@ hr{
   color: rgb(221, 221, 255);
   text-shadow: 1px 1px 5px rgba(15, 83, 252, 1), 1px 1px 10px rgb(19, 38, 87);
 }
-</style>
+</style>@/types/dataTypes/Student

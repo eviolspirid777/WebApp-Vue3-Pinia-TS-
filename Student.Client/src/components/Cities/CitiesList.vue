@@ -18,66 +18,52 @@
       :rows="sendAllCities"
       @delete="deleteCity"
       @clickData="editCity"
-    />
+    >
+      <template v-slot:buttons="propsData">
+        <CityButtons :data="propsData.data" :dataId="propsData.dataId" @clickData="editCity" @delete="deleteCity"></CityButtons>
+      </template>
+    </MainTable>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, computed, onMounted } from 'vue';
+<script lang="ts" setup>
+import { ref, computed, onMounted } from 'vue';
 import { useCitiesStore } from '@/stores/citiesStore';
 import MainTable from "../MainTable.vue";
 import ModalForm from "./CityForm.vue";
 import { City } from '@/types/dataTypes/City';
+import CityButtons from '@/components/Slots/CitiesTableSlot.vue'
 
-export default defineComponent({
-  components: {
-    MainTable,
-    ModalForm
-  },
-  setup() {
-    const citiesStore = useCitiesStore();
-    const showModal = ref(false);
-    const selectedCity = ref<City|undefined>({id:undefined, country:undefined});
-    const nameFilter = ref("");
-    const cities = ref([
-      { key: "country", label: "Город" }
-    ]);
+const citiesStore = useCitiesStore();
+const showModal = ref(false);
+const selectedCity = ref<City|undefined>({id:undefined, country:undefined});
+const nameFilter = ref("");
+const cities = ref([
+  { key: "country", label: "Город" }
+]);
 
-    const sendAllCities = computed(() => citiesStore.cities);
+const sendAllCities = computed(() => citiesStore.cities);
 
-    const closeModalWindow = () => {
-      selectedCity.value = {id:undefined, country:undefined};
-      showModal.value = !showModal.value;
-    };
+const closeModalWindow = () => {
+  selectedCity.value = {id:undefined, country:undefined};
+  showModal.value = !showModal.value;
+};
 
-    const deleteCity = (id:number) => {
-      citiesStore.deleteCity(id);
-    };
+const deleteCity = (id:number) => {
+  citiesStore.deleteCity(id);
+};
 
-    const editCity = (city:City) => {
-      selectedCity.value = city;
-      showModal.value = true;
-    };
+const editCity = (city:City) => {
+  selectedCity.value = city;
+  showModal.value = true;
+};
 
-    const refreshData = async () => {
-      await citiesStore.fetchCities();
-    };
+const refreshData = async () => {
+  await citiesStore.fetchCities();
+};
 
-    onMounted(async () => {
-      await refreshData();
-    });
-
-    return {
-      showModal,
-      selectedCity,
-      nameFilter,
-      cities,
-      sendAllCities,
-      closeModalWindow,
-      deleteCity,
-      editCity
-    };
-  }
+onMounted(async () => {
+  await refreshData();
 });
 </script>
 

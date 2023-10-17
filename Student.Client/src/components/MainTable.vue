@@ -26,30 +26,7 @@
           </td>
           <td>
             <div class="d-flex">
-              <button
-                v-if="cityCheck"
-                type="button"
-                class="btn-b-0-20"
-                @click="sendInformation(data)"
-              >
-                <i class="fa-solid fa-info" />
-              </button>
-              <button
-                type="button"
-                class="btn-b-0-20"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-                @click="editData(data)"
-              >
-                <i class="far fa-edit" />
-              </button>
-              <button
-                type="button"
-                class="btn-b-0-20"
-                @click="deleteData(data.id)"
-              >
-                <i class="fa-solid fa-trash" />
-              </button>
+              <slot name="buttons" :dataId="data.id" :data="data"></slot>
             </div>
           </td>
         </tr>
@@ -58,93 +35,63 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType, ref, computed, watch, defineEmits } from 'vue';
-import {Columns} from "@/types/columnsRows/columns"
-import {Rows} from "@/types/columnsRows/rows"
-import _ from "lodash"
+<script lang="ts" setup>
+import { PropType, ref, computed, watch, defineEmits, defineProps } from 'vue';
+import { Columns } from "@/types/columnsRows/columns";
+import { Rows } from "@/types/columnsRows/rows";
+import _ from "lodash";
 
-export default defineComponent({
-  emits:["clickData", "delete", "sort", "refresh", "sendData"],
+const emit = defineEmits(["clickData", "delete", "sort", "refresh", "sendData"]);
 
-  props: {
-    columns: {
-      type: Array as PropType<Columns[]>,
-      default: () => []
-    },
-    rows: {
-      type: Array as PropType<Rows[]>,
-      default: () => []
-    }
+const props = defineProps({
+  columns: {
+    type: Array as PropType<Columns[]>,
+    default: () => []
   },
-  setup(props, {emit}) {
-    const cont = ref(0);
-    const sortTitle = ref("");
-    const cityCheck = ref(false);
-
-    const columnsFields = computed(() => {
-      return _.cloneDeep(props.columns)
-    });
-
-    watch(
-      () => props.columns,
-      () => {
-        cityCheck.value = props.columns.length >= 2;
-      },
-      { immediate: true }
-    );
-
-    const getValueFromKey = (value: any, key: string) => {
-      return value[key];
-    };
-
-    const editData = (value: any) => {
-      emit("clickData", value);
-    };
-
-    const deleteData = (ID: number) => {
-      if (!confirm("Вы уверены?")) {
-        return;
-      }
-      emit("delete", ID);
-    };
-
-    const sortData = (title: string) => {
-      if (sortTitle.value === title) {
-        cont.value++;
-      } else {
-        sortTitle.value = title;
-        cont.value = 1;
-      }
-
-      if (cont.value === 1) {
-        emit("sort", sortTitle.value, true);
-      } else if (cont.value === 2) {
-        emit("sort", sortTitle.value, false);
-      } else if (cont.value === 3) {
-        emit("refresh");
-        cont.value = 0;
-        sortTitle.value = "";
-      }
-    };
-
-    const sendInformation = (data: any) => {
-      emit("sendData", data);
-    };
-
-    return {
-      cont,
-      sortTitle,
-      cityCheck,
-      columnsFields,
-      getValueFromKey,
-      editData,
-      deleteData,
-      sortData,
-      sendInformation
-    };
+  rows: {
+    type: Array as PropType<Rows[]>,
+    default: () => []
   }
 });
+
+const cont = ref(0);
+const sortTitle = ref("");
+const cityCheck = ref(false);
+
+const columnsFields = computed(() => {
+  return _.cloneDeep(props.columns);
+});
+
+watch(
+  () => props.columns,
+  () => {
+    cityCheck.value = props.columns.length >= 2;
+  },
+  { immediate: true }
+);
+
+const getValueFromKey = (value: any, key: string) => {
+  return value[key];
+};
+
+const sortData = (title: string) => {
+  if (sortTitle.value === title) {
+    cont.value++;
+  } else {
+    sortTitle.value = title;
+    cont.value = 1;
+  }
+
+  if (cont.value === 1) {
+    emit("sort", sortTitle.value, true);
+  } else if (cont.value === 2) {
+    emit("sort", sortTitle.value, false);
+  } else if (cont.value === 3) {
+    emit("refresh");
+    cont.value = 0;
+    sortTitle.value = "";
+  }
+};
 </script>
 
 <style scoped lang="scss">

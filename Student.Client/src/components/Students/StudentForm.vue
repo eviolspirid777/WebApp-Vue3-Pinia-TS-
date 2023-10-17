@@ -38,92 +38,80 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType, ref, computed, onMounted, defineEmits } from 'vue';
+<script lang="ts" setup>
+import { PropType, ref, computed, onMounted, defineEmits, defineProps } from 'vue';
 import { useStudentsStore } from '@/stores/studentsStore';
 import { useCitiesStore } from '@/stores/citiesStore';
 import { Student } from '@/types/dataTypes/Student'
 import { City } from '@/types/dataTypes/City';
 import _ from "lodash"
 
-export default defineComponent({
-  emits:["close"],
-  props: {
-    currentStudent: {
-      type: Object as PropType<Student>,
-      default: () => ({})
-    }
-  },
-  setup(props, {emit}) {
-    const studentsStore = useStudentsStore();
-    const citiesStore = useCitiesStore();
-    const selectedStudent = ref<Student>(Object.keys(props.currentStudent).length !== 0 ? _.cloneDeep(props.currentStudent) : {
-      id: 0,
-      name: "",
-      surname: "",
-      patron: "",
-      faculty: "",
-      specialty: "",
-      course: "",
-      group: "",
-      city: { id: 0, country: "" },
-      postalCode: "",
-      street: "",
-      phone: "",
-      email: ""
-    });
+const emit = defineEmits(["close"]);
 
-    const getAllCities = computed(() => citiesStore.cities);
-
-    const citiesChecker = () =>{
-      var cities = citiesStore.cities
-      return Object.keys(cities).length !== 0 ? true : false
-    }
-    
-    const cities = computed(() => {
-      return getAllCities.value
-    });
-
-    onMounted(async () => {
-      await citiesStore.fetchCities();
-    });
-
-    const submit = async () => {
-      selectedStudent.value = {...selectedStudent.value,
-        city:{
-          id: citiesStore.cities.find((city: City) => selectedStudent.value.city?.country === city.country)?.id,
-          country: selectedStudent.value.city?.country
-        }
-      }
-      if (Object.values(selectedStudent.value).some(value => value === "" || value === null || value === undefined)) {
-        alert("Заполните все поля в форме!");
-      } 
-      else {
-        if (Object.keys(props.currentStudent).length === 0) {
-          await studentsStore.addStudent(selectedStudent.value);
-        }
-        else {
-          await studentsStore.updateStudent(selectedStudent.value);
-        }
-        await studentsStore.fetchStudents();
-        close();
-      }
-    };
-
-    const close = () => {
-      emit("close");
-    }
-  
-    return {
-      selectedStudent,
-      getAllCities,
-      cities,
-      citiesChecker,
-      submit,
-      close,
-    };
+const props = defineProps({
+  currentStudent: {
+    type: Object as PropType<Student>,
+    default: () => ({})
   }
 });
+
+const studentsStore = useStudentsStore();
+const citiesStore = useCitiesStore();
+const selectedStudent = ref<Student>(Object.keys(props.currentStudent).length !== 0 ? _.cloneDeep(props.currentStudent) : {
+  id: 0,
+  name: "",
+  surname: "",
+  patron: "",
+  faculty: "",
+  specialty: "",
+  course: "",
+  group: "",
+  city: { id: 0, country: "" },
+  postalCode: "",
+  street: "",
+  phone: "",
+  email: ""
+});
+
+const getAllCities = computed(() => citiesStore.cities);
+
+const citiesChecker = () => {
+  const cities = citiesStore.cities;
+  return Object.keys(cities).length !== 0 ? true : false;
+};
+
+const cities = computed(() => {
+  return getAllCities.value;
+});
+
+onMounted(async () => {
+  await citiesStore.fetchCities();
+});
+
+const submit = async () => {
+  selectedStudent.value = {
+    ...selectedStudent.value,
+    city: {
+      id: citiesStore.cities.find((city: City) => selectedStudent.value.city?.country === city.country)?.id,
+      country: selectedStudent.value.city?.country
+    }
+  };
+  if (Object.values(selectedStudent.value).some(value => value === "" || value === null || value === undefined)) {
+    alert("Заполните все поля в форме!");
+  } else {
+    if (Object.keys(props.currentStudent).length === 0) {
+      await studentsStore.addStudent(selectedStudent.value);
+    } else {
+      await studentsStore.updateStudent(selectedStudent.value);
+    }
+    await studentsStore.fetchStudents();
+    close();
+  }
+};
+
+const close = () => {
+  emit("close");
+};
 </script>
 
 <style scoped lang="scss">

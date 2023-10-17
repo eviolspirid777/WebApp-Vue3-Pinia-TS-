@@ -11,35 +11,26 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed, onMounted } from 'vue';
+<script lang="ts" setup>
+import { computed, onMounted } from 'vue';
 import { useStudentsStore } from '@/stores/studentsStore';
 import { useRoute } from 'vue-router';
 import { Student } from '@/types/dataTypes/Student';
 
+const studentsStore = useStudentsStore();
+const route = useRoute();
+const allStudents = computed(() => studentsStore.students);
 
-export default defineComponent({
-  name: 'StudentInfo',
-  setup() {
-    const studentsStore = useStudentsStore();
-    const route = useRoute();
-    const allStudents = computed(() => studentsStore.students);
+const studentData = computed(() => {
+  const id = route.params.studentId;
+  const selectedStudent: Student | undefined = allStudents.value.find(
+    (student) => typeof id === 'string' && student.id?.toString() === id
+  );
+  return selectedStudent;
+});
 
-    const studentData =  computed(() => {
-      const id = route.params.studentId;
-      const selectedStudent: Student | undefined =  allStudents.value.find(student => typeof id === 'string' && student.id?.toString() === id);
-      return selectedStudent;
-    });
-
-    onMounted(async () => {
-      await studentsStore.fetchStudents();
-    });
-
-    return {
-      allStudents,
-      studentData
-    };
-  },
+onMounted(async () => {
+  await studentsStore.fetchStudents();
 });
 </script>
 

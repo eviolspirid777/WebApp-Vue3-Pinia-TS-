@@ -24,19 +24,13 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed, ref, onMounted } from 'vue';
+<script lang="ts" setup>
+import { computed, ref, onMounted } from 'vue';
 import _ from 'lodash';
 import StudentForm from '@/components/Students/StudentForm.vue';
 import TableForm from '@/components/Students/StudentTable.vue';
 import { useStudentsStore } from "@/stores/studentsStore"
 
-export default defineComponent({
-  components: {
-    TableForm,
-    StudentForm,
-  },
-  setup() {
     var studentsStore = useStudentsStore();
     const nameFilter = ref('');
     const showModal = ref(false);
@@ -56,17 +50,6 @@ export default defineComponent({
     onMounted(() => {
       getAllStudents;
     });
-
-    return {
-      nameFilter,
-      showModal,
-      getAllStudents,
-      debouncedFilter,
-      studentsStore,
-      studentFormSwitcher
-    };
-  },
-});
 </script>
 
 <style scoped lang="scss">

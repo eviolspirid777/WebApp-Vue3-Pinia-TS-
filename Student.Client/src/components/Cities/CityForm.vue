@@ -29,65 +29,54 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType, ref, computed, onMounted, defineEmits } from 'vue';
+<script lang="ts" setup>
+import { PropType, ref, computed, onMounted, defineEmits, defineProps } from 'vue';
 import { useCitiesStore } from '@/stores/citiesStore';
 import { City } from '@/types/dataTypes/City';
 
-export default defineComponent({
-  emits:["close"],
+const emit = defineEmits(["close"]);
 
-  props: {
-    selectedcity: {
-      type: Object as PropType<City>,
-      default: () => ({})
-    }
-  },
-  setup(props, { emit }) {
-    const citiesStore = useCitiesStore();
-    const formData = ref({...props.selectedcity});
-    const option = ref([
-      {key:"city", label:"Город"},
-    ])
+const props = defineProps({
+selectedcity: {
+  type: Object as PropType<City>,
+  default: () => ({})
+}
+})
+const citiesStore = useCitiesStore();
+const formData = ref({...props.selectedcity});
+const option = ref([
+  {key:"city", label:"Город"},
+])
 
-    const checkCity = (city:City) => {
-     return city.country === undefined ?  true : false
-    }
+const checkCity = (city:City) => {
+  return city.country === undefined ?  true : false
+}
 
-    const submit = async () => {
-      if (checkCity(props.selectedcity)) {
-        console.log(props.selectedcity);
-        console.log("addMethod");
-        await citiesStore.addCity(formData.value);
-      } else {
-        console.log(props.selectedcity);
-        console.log("updateMethod");
-        await citiesStore.updateCity(formData.value);
-      }
-      await citiesStore.fetchCities();
-      close();
-    };
-
-    const close = () => {
-      emit("close");
-    };
-    
-    const selData = computed(() => {
-      return formData.value;
-    })
-
-    onMounted(() => {
-      console.log(props.selectedcity);
-    })
-    return {
-      formData,
-      selData,
-      submit,
-      close,
-      option
-    };
+const submit = async () => {
+  if (checkCity(props.selectedcity)) {
+    console.log(props.selectedcity);
+    console.log("addMethod");
+    await citiesStore.addCity(formData.value);
+  } else {
+    console.log(props.selectedcity);
+    console.log("updateMethod");
+    await citiesStore.updateCity(formData.value);
   }
-});
+  await citiesStore.fetchCities();
+  close();
+};
+
+const close = () => {
+  emit("close");
+};
+
+const selData = computed(() => {
+  return formData.value;
+})
+
+onMounted(() => {
+  console.log(props.selectedcity);
+})
 </script>
 
 <style scoped lang="scss">

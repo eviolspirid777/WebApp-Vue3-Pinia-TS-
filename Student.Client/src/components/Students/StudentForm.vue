@@ -75,6 +75,16 @@ const selectedStudent = ref<Student>(Object.keys(props.currentStudent).length !=
 
 const getAllCities = computed(() => citiesStore.cities);
 
+const updateStudentData = (student:Student) => {
+  return selectedStudent.value = {
+    ...student,
+    city: {
+      id: citiesStore.cities.find((city: City) => selectedStudent.value.city?.country === city.country)?.id,
+      country: selectedStudent.value.city?.country
+    }
+  };
+}
+
 const citiesChecker = () => {
   const cities = citiesStore.cities;
   return Object.keys(cities).length !== 0 ? true : false;
@@ -89,13 +99,14 @@ onMounted(async () => {
 });
 
 const submit = async () => {
-  selectedStudent.value = {
-    ...selectedStudent.value,
-    city: {
-      id: citiesStore.cities.find((city: City) => selectedStudent.value.city?.country === city.country)?.id,
-      country: selectedStudent.value.city?.country
-    }
-  };
+  // selectedStudent.value = {
+  //   ...selectedStudent.value,
+  //   city: {
+  //     id: citiesStore.cities.find((city: City) => selectedStudent.value.city?.country === city.country)?.id,
+  //     country: selectedStudent.value.city?.country
+  //   }
+  // };
+  updateStudentData(selectedStudent.value);
   if (Object.values(selectedStudent.value).some(value => value === "" || value === null || value === undefined)) {
     alert("Заполните все поля в форме!");
   } else {

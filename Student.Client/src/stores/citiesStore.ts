@@ -3,8 +3,6 @@ import {ref, Ref} from "vue";
 import {useCitiesClient} from "../api/citiesAPI"
 import { useStudentsStore } from './studentsStore';
 import { City } from '@/types/dataTypes/City';
-import { Student } from '@/types/dataTypes/Student';
-import { SortOptions } from '@/types/sortOptions/iSort';
 
 const DataClient = useCitiesClient();
 
@@ -12,7 +10,7 @@ const DataClient = useCitiesClient();
 export const useCitiesStore = defineStore('citiesStore', () => {
     const cities: Ref<City[]> = ref([]);
 
-    const addCity = async (city:City) => {
+    const addCity = async (city:City & object) => {
         await DataClient.postCity(city);
         useStudentsStore().fetchStudents;
     }

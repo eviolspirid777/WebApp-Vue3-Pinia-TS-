@@ -7,7 +7,7 @@ export type Student = {
     specialty: string|undefined;
     course: string|undefined;
     group: string|undefined;
-    city: {id: number|undefined, country: string|undefined}|undefined;
+    city: {id: number|undefined, country: string|undefined};
     postalCode: string|undefined;
     street: string|undefined;
     phone: string|undefined;

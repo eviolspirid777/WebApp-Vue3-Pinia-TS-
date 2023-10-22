@@ -70,7 +70,7 @@ watch(
   { immediate: true }
 );
 
-const getValueFromKey = (value: any, key: string) => {
+const getValueFromKey = (value: string & number & object, key: string) => {
   return value[key];
 };
 

@@ -13,9 +13,7 @@
           </div>
           <div v-else-if="key === 'city'">
             <label>city:</label>
-            <select v-if="citiesChecker()" id="city" v-model="selectedStudent.city.country">
-              <option v-for="(item,key) in cities" :key="key">{{ item.country }}</option>
-            </select>
+            <multiselect v-if="citiesChecker()" v-model="selectedStudent.city.country" :options="cities.map(city => city.country)" class="multiselect" />
             <input v-else type="text" v-model="selectedStudent.city.country"/>
           </div>
         </div>
@@ -43,7 +41,7 @@ import { PropType, ref, computed, onMounted, defineEmits, defineProps } from 'vu
 import { useStudentsStore } from '@/stores/studentsStore';
 import { useCitiesStore } from '@/stores/citiesStore';
 import { Student } from '@/types/dataTypes/Student'
-import { City } from '@/types/dataTypes/City';
+import multiselect from "vue-multiselect"
 import _ from "lodash"
 
 const emit = defineEmits(["close"]);
@@ -75,16 +73,6 @@ const selectedStudent = ref<Student>(Object.keys(props.currentStudent).length !=
 
 const getAllCities = computed(() => citiesStore.cities);
 
-const updateStudentData = (student:Student) => {
-  return selectedStudent.value = {
-    ...student,
-    city: {
-      id: citiesStore.cities.find((city: City) => selectedStudent.value.city?.country === city.country)?.id,
-      country: selectedStudent.value.city?.country
-    }
-  };
-}
-
 const citiesChecker = () => {
   const cities = citiesStore.cities;
   return Object.keys(cities).length !== 0 ? true : false;
@@ -99,20 +87,17 @@ onMounted(async () => {
 });
 
 const submit = async () => {
-  // selectedStudent.value = {
-  //   ...selectedStudent.value,
-  //   city: {
-  //     id: citiesStore.cities.find((city: City) => selectedStudent.value.city?.country === city.country)?.id,
-  //     country: selectedStudent.value.city?.country
-  //   }
-  // };
-  updateStudentData(selectedStudent.value);
   if (Object.values(selectedStudent.value).some(value => value === "" || value === null || value === undefined)) {
     alert("Заполните все поля в форме!");
-  } else {
+  }
+  else {
     if (Object.keys(props.currentStudent).length === 0) {
+      if(Object.keys(getAllCities.value).length === 0){
+        await citiesStore.addCity(selectedStudent.value.city)
+      }
       await studentsStore.addStudent(selectedStudent.value);
-    } else {
+    }
+    else {
       await studentsStore.updateStudent(selectedStudent.value);
     }
     await studentsStore.fetchStudents();
@@ -195,9 +180,41 @@ const close = () => {
 hr{
   color:rgb(46, 73, 108)
 }
+.multiselect {
+  width: 200px;
+  height: 35px;
+  margin-bottom: 20px; 
+  margin-left: 160px;
+  margin-top: -25px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: rgba(19, 38, 87, 0.308);
+  color: #fff;
+  & select{
+      width: 200px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 16px;
+      background-color: rgba(19, 38, 87, 0.308);
+      color: #fff;
+    }
+}
 .add-city {
   background-color: rgba(15, 82, 252, 0.551);
   color: white;
+}
+input {
+  width: 200px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+  background-color: rgba(19, 38, 87, 0.308);
+  color: #fff;
 }
 .btn-own-cls {
   width: 120px;

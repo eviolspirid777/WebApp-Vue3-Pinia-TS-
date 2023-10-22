@@ -37,7 +37,6 @@ import CityButtons from '@/components/Slots/CitiesTableSlot.vue'
 const citiesStore = useCitiesStore();
 const showModal = ref(false);
 const selectedCity = ref<City|undefined>({id:undefined, country:undefined});
-const nameFilter = ref("");
 const cities = ref([
   { key: "country", label: "Город" }
 ]);

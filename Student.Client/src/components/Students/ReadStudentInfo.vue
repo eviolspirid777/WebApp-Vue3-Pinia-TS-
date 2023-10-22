@@ -16,6 +16,7 @@ import { computed, onMounted } from 'vue';
 import { useStudentsStore } from '@/stores/studentsStore';
 import { useRoute } from 'vue-router';
 import { Student } from '@/types/dataTypes/Student';
+import { City } from '@/types/dataTypes/City';
 
 const studentsStore = useStudentsStore();
 const route = useRoute();
@@ -23,7 +24,7 @@ const allStudents = computed(() => studentsStore.students);
 
 const studentData = computed(() => {
   const id = route.params.studentId;
-  const selectedStudent: Student | undefined = allStudents.value.find(
+  const selectedStudent: Student | undefined | City = allStudents.value.find(
     (student) => typeof id === 'string' && student.id?.toString() === id
   );
   return selectedStudent;

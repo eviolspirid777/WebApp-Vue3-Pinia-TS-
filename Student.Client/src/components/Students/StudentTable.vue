@@ -48,7 +48,6 @@ const selectedStudent = ref <Student>({
   phone: "",
   email: ""
 });
-const nameFilter = ref<string>('');
 const tableFields = [
   { key: 'surname', label: 'Фамилия' },
   { key: 'name', label: 'Имя' },

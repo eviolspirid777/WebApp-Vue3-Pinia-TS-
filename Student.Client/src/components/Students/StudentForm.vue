@@ -8,8 +8,9 @@
         <hr>
         <div v-for="(data, key) in selectedStudent" :key="key" class="label-input">
           <div v-if="key !== 'city' && key !== 'id'">
-            <label :for="data">{{ key }}</label>
-            <input type="text" :id="data" v-model="selectedStudent[key]">
+            <label>{{ key }}</label>
+            <input type="text" v-model="selectedStudent[key]">
+            <!-- <owninputway :label-text="key" :model-value="selectedStudent[key]" /> -->
           </div>
           <div v-else-if="key === 'city'">
             <label>city:</label>
@@ -43,6 +44,7 @@ import { useCitiesStore } from '@/stores/citiesStore';
 import { Student } from '@/types/dataTypes/Student'
 import multiselect from "vue-multiselect"
 import _ from "lodash"
+import owninputway from "../inputs/OwnInputWay.vue"
 
 const emit = defineEmits(["close"]);
 
@@ -240,4 +242,4 @@ input {
 .label-input {
   margin-bottom: 20px;
 }
-</style>@/types/dataTypes/City@/types/dataTypes/Student
+</style>

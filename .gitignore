@@ -1,0 +1,66 @@
+.DS_Store
+node_modules
+/dist
+
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Игнорировать файлы компиляции и бинарные файлы
+*.exe
+*.dll
+*.class
+*.jar
+
+# Игнорировать файлы конфигурации
+*.config
+*.env
+
+# Игнорировать папку с зависимостями
+/node_modules/
+
+# Игнорировать файлы логов и временные файлы
+/logs/
+/tmp/
+
+../Student.Service/Student.Service/obj/
+obj/
+/**/obj/**/*
+/./**/obj/**/*
+./**/obj/**/*
+**/obj/**/*
+*/obj/**/*
+obj/**/*
+/**/obj/*
+./**/**/obj
+./**/obj
+
+../Student.Service/Student.Service/bin/
+bin/
+/**/bin/**/*
+/./**/bin/**/*
+./**/bin/**/*
+**/bin/**/*
+*/bin/**/*
+bin/**/*
+/**/bin/*
+./**/**/bin
+./**/bin
+
+../Student.Service/Student.Service/.vs/

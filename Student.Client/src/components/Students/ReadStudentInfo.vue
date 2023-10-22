@@ -5,8 +5,7 @@
     </h3>
     <hr>
     <p v-for="(value, key) in studentData" :key="key">
-      <label v-if="key === 'city'">city: {{ value?.country }}</label>
-      <label v-else>{{ key }}: {{ value }}</label>
+      <label>{{ key === 'city' ? 'city: ' + value?.country : key + ': ' + value }}</label>
     </p>
   </div>
 </template>

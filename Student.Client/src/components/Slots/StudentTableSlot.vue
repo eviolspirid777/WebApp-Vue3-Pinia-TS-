@@ -28,6 +28,7 @@
 <script lang="ts" setup>
 import {PropType, defineProps, defineEmits } from 'vue'
 import {Student} from '@/types/dataTypes/Student'
+import { City } from '@/types/dataTypes/City';
 
 const emit = defineEmits(["clickData","delete","sendData"])
 const props = defineProps({
@@ -35,7 +36,7 @@ const props = defineProps({
         type: Number as PropType<number>
     },
     data: {
-        type: Object as PropType<Student>
+        type: Object as PropType<Student | City>
     }
 })
 

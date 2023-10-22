@@ -23,8 +23,8 @@
 
 <script lang="ts" setup>
 import { computed, ref, onMounted } from 'vue';
-import MainTable from '@/components/MainTable.vue';
-import StudentForm from '@/components/Students/StudentForm.vue';
+import MainTable from '../MainTable.vue';
+import StudentForm from '../Students/StudentForm.vue';
 import StudentTableSlotVue from '@/components/Slots/StudentTableSlot.vue'
 import { useStudentsStore } from '@/stores/studentsStore';
 import { useRouter } from 'vue-router';

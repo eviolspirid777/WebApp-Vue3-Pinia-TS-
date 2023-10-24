@@ -1,25 +1,25 @@
 <template>
-    <div class="d-flex">
-        <button
-        type="button"
-        class="btn-b-0-20"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-        @click="editData()"
-        >
-        <i class="far fa-edit" />
-        </button>
-        <button
-        type="button"
-        class="btn-b-0-20"
-        @click="deleteData()"
-        >
-        <i class="fa-solid fa-trash" />
-        </button>
-    </div>
+  <div class="d-flex">
+    <button
+      type="button"
+      class="btn-b-0-20"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+      @click="editData()"
+    >
+      <i class="far fa-edit" />
+    </button>
+    <button
+      type="button"
+      class="btn-b-0-20"
+      @click="deleteData()"
+    >
+      <i class="fa-solid fa-trash" />
+    </button>
+  </div>
 </template>
 <script lang="ts" setup>
-import { PropType, defineProps, defineEmits } from 'vue'
+import { PropType } from 'vue'
 import { City } from '@/types/dataTypes/City'
 import { Student } from '@/types/dataTypes/Student';
 

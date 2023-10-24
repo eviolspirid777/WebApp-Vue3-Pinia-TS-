@@ -6,16 +6,32 @@
           Данные о студенте
         </h1>
         <hr>
-        <div v-for="(data, key) in selectedStudent" :key="key" class="label-input">
+        <div
+          v-for="(data, key) in selectedStudent"
+          :key="key"
+          class="label-input"
+        >
           <div v-if="key !== 'city' && key !== 'id'">
             <label>{{ key }}</label>
-            <input type="text" v-model="selectedStudent[key]">
+            <input
+              v-model="selectedStudent[key]"
+              type="text"
+            >
             <!-- <owninputway :label-text="key" :model-value="selectedStudent[key]" /> -->
           </div>
           <div v-else-if="key === 'city'">
             <label>city:</label>
-            <multiselect v-if="citiesChecker()" v-model="selectedStudent.city.country" :options="cities.map(city => city.country)" class="multiselect" />
-            <input v-else type="text" v-model="selectedStudent.city.country"/>
+            <multiselect
+              v-if="citiesChecker()"
+              v-model="selectedStudent.city.country"
+              :options="cities.map(city => city.country)"
+              class="multiselect"
+            />
+            <input
+              v-else
+              v-model="selectedStudent.city.country"
+              type="text"
+            >
           </div>
         </div>
         <div class="modal-footer">
@@ -36,9 +52,8 @@
     </div>
   </div>
 </template>
-
 <script lang="ts" setup>
-import { PropType, ref, computed, onMounted, defineEmits, defineProps } from 'vue';
+import { PropType, ref, computed, onMounted } from 'vue';
 import { useStudentsStore } from '@/stores/studentsStore';
 import { useCitiesStore } from '@/stores/citiesStore';
 import { Student } from '@/types/dataTypes/Student'
@@ -183,30 +198,16 @@ hr{
   color:rgb(46, 73, 108)
 }
 .multiselect {
+  position: fixed;
   width: 200px;
   height: 35px;
+  z-index: 9999;
   margin-bottom: 20px; 
   margin-left: 160px;
   margin-top: -25px;
   font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
   background-color: rgba(19, 38, 87, 0.308);
-  color: #fff;
-  & select{
-      width: 200px;
-      padding: 5px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-      font-size: 16px;
-      background-color: rgba(19, 38, 87, 0.308);
-      color: #fff;
-    }
-}
-.add-city {
-  background-color: rgba(15, 82, 252, 0.551);
-  color: white;
+  color: #ffffff;
 }
 input {
   width: 200px;

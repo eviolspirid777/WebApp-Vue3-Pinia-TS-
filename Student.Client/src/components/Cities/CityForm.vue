@@ -6,9 +6,20 @@
           Данные о городе
         </h1>
         <hr>
-        <div v-for="keyOpt in option" :key="keyOpt.key">
-          <label class="label-input" :for="keyOpt.key">{{ keyOpt.label }}</label>
-          <input class="input-cls" type="text" :id="keyOpt.key" v-model="selData.country">
+        <div
+          v-for="keyOpt in option"
+          :key="keyOpt.key"
+        >
+          <label
+            class="label-input"
+            :for="keyOpt.key"
+          >{{ keyOpt.label }}</label>
+          <input
+            :id="keyOpt.key"
+            v-model="selData.country"
+            class="input-cls"
+            type="text"
+          >
         </div>
         <div class="modal-footer">
           <button
@@ -30,7 +41,7 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, ref, computed, onMounted, defineEmits, defineProps } from 'vue';
+import { PropType, ref, computed, onMounted } from 'vue';
 import { useCitiesStore } from '@/stores/citiesStore';
 import { City } from '@/types/dataTypes/City';
 
@@ -176,4 +187,4 @@ hr{
 .input-cls {
   margin-right: 20px;
 }
-</style>@/types/dataTypes/City
+</style>

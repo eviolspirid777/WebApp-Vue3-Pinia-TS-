@@ -30,22 +30,22 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted} from "vue";
+import { defineComponent, onMounted } from "vue";
 import { useCitiesStore } from "./stores/citiesStore";
 import { useStudentsStore } from "./stores/studentsStore";
 
 export default defineComponent({
-  name: 'App',
+  name: "App",
 
-setup() {
-  const studentsStore = useStudentsStore();
-  const citiesStore = useCitiesStore();
+  setup() {
+    const studentsStore = useStudentsStore();
+    const citiesStore = useCitiesStore();
 
-  onMounted(async () => {
+    onMounted(async () => {
       await citiesStore.fetchCities();
       await studentsStore.fetchStudents();
     });
-},
+  }
 });
 </script>
 

@@ -1,7 +1,7 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import Cities from '@/components/Cities/CitiesList.vue';
-import StudentsComponent from '@/components/Students/StudentsList.vue';
-import StudentInfo from '@/components/Students/ReadStudentInfo.vue';
+import Cities from "@/components/Cities/CitiesList.vue";
+import StudentInfo from "@/components/Students/ReadStudentInfo.vue";
+import StudentsComponent from "@/components/Students/StudentsList.vue";
+import { createRouter, createWebHashHistory } from "vue-router";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -11,6 +11,6 @@ const router = createRouter({
     { name: "Cities", path: "/Cities", component: Cities },
     { name: "StudentInfo", path: "/StudentInfo/:studentId", component: StudentInfo }
   ]
-})
+});
 
-export default router
+export default router;

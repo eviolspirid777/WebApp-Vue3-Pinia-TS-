@@ -25,31 +25,31 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, onMounted } from 'vue';
-import _ from 'lodash';
-import StudentForm from '@/components/Students/StudentForm.vue';
-import TableForm from '@/components/Students/StudentTable.vue';
-import { useStudentsStore } from "@/stores/studentsStore"
+import _ from "lodash";
+import StudentForm from "@/components/Students/StudentForm.vue";
+import TableForm from "@/components/Students/StudentTable.vue";
+import { computed, onMounted, ref } from "vue";
+import { useStudentsStore } from "@/stores/studentsStore";
 
-    var studentsStore = useStudentsStore();
-    const nameFilter = ref('');
-    const showModal = ref(false);
+let studentsStore = useStudentsStore();
+const nameFilter = ref("");
+const showModal = ref(false);
 
-    const getAllStudents = computed(() => {
-      return studentsStore.students;
-    });
+const getAllStudents = computed(() => {
+  return studentsStore.students;
+});
 
-    const debouncedFilter = _.debounce(() => {
-      studentsStore.filterStudents(nameFilter.value);
-    }, 500);
+const debouncedFilter = _.debounce(() => {
+  studentsStore.filterStudents(nameFilter.value);
+}, 500);
 
-    const studentFormSwitcher = () => {
-      showModal.value = !showModal.value;
-    }
+const studentFormSwitcher = () => {
+  showModal.value = !showModal.value;
+};
 
-    onMounted(() => {
-      getAllStudents;
-    });
+onMounted(() => {
+  getAllStudents;
+});
 </script>
 
 <style scoped lang="scss">

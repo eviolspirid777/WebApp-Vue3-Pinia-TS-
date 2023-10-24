@@ -19,8 +19,13 @@
       @delete="deleteCity"
       @clickData="editCity"
     >
-      <template v-slot:buttons="propsData">
-        <CityButtons :data="propsData.data" :dataId="propsData.dataId" @clickData="editCity" @delete="deleteCity"></CityButtons>
+      <template #buttons="propsData">
+        <CityButtons
+          :data="propsData.data"
+          :data-id="propsData.dataId"
+          @clickData="editCity"
+          @delete="deleteCity"
+        />
       </template>
     </MainTable>
   </div>
@@ -69,6 +74,7 @@ onMounted(async () => {
 <style scoped lang="scss">
 .btn-own-cls{
   border: 2px solid rgba(15, 83, 252);
+  height: 40px;
   border-radius: 4px;
   border-color: rgba(15, 83, 252);
   transition: background-color 0.3s ease;
@@ -79,4 +85,4 @@ onMounted(async () => {
     color: white;
   }
 }
-</style>@/stores/studentsStore@/types/dataTypes/City
+</style>

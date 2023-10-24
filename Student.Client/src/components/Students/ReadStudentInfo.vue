@@ -4,8 +4,16 @@
       Информация о студенте
     </h3>
     <hr>
-    <p v-for="(value, key) in studentData" :key="key">
-      <label>{{ key === 'city' ? 'city: ' + value?.country : key + ': ' + value }}</label>
+    <p
+      v-for="(value, key) in studentData"
+      :key="key"
+    >
+      <label v-if="key === 'city'">
+        {{ typeof value === 'object' ? 'city: ' + value?.country : 'city: ' + value }}
+      </label>
+      <label v-else>
+        {{ key + ': ' + value}}  
+      </label>
     </p>
   </div>
 </template>
@@ -76,4 +84,4 @@ hr{
   color: rgb(221, 221, 255);
   text-shadow: 1px 1px 5px rgba(15, 83, 252, 1), 1px 1px 10px rgb(19, 38, 87);
 }
-</style>@/types/dataTypes/Student
+</style>

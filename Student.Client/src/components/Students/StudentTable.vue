@@ -9,10 +9,16 @@
       @sendData="openInformation"
       @delete="deleteStudent" 
     >
-    <template v-slot:buttons="slotProps">
-      <StudentTableSlotVue :data="slotProps.data" :dataId="slotProps.dataId" @clickData="editStudent" @sendData="openInformation" @delete="deleteStudent" ></StudentTableSlotVue>
-    </template>
-  </MainTable>
+      <template #buttons="slotProps">
+        <StudentTableSlotVue
+          :data="slotProps.data"
+          :data-id="slotProps.dataId"
+          @clickData="editStudent"
+          @sendData="openInformation"
+          @delete="deleteStudent"
+        />
+      </template>
+    </MainTable>
     <StudentForm
       v-if="showModal"
       :current-student="selectedStudent"

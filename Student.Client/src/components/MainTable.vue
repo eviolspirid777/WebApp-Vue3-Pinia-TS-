@@ -20,13 +20,23 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="data in rows" :key="data.id">
-          <td v-for="field in columnsFields" :key="field.key">
+        <tr
+          v-for="data in rows"
+          :key="data.id"
+        >
+          <td
+            v-for="field in columnsFields"
+            :key="field.key"
+          >
             {{ field.key !== "city" ? getValueFromKey(data, field.key) : getValueFromKey(data, field.key).country }}
           </td>
           <td>
             <div class="d-flex">
-              <slot name="buttons" :dataId="data.id" :data="data"></slot>
+              <slot
+                name="buttons"
+                :data-id="data.id"
+                :data="data"
+              />
             </div>
           </td>
         </tr>
@@ -36,7 +46,7 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, ref, computed, watch, defineEmits, defineProps } from 'vue';
+import { PropType, ref, computed, watch} from 'vue';
 import { Columns } from "@/types/columnsRows/columns";
 import { Rows } from "@/types/columnsRows/rows";
 import _ from "lodash";

@@ -12,7 +12,7 @@
         {{ typeof value === 'object' ? 'city: ' + value?.country : 'city: ' + value }}
       </label>
       <label v-else>
-        {{ key + ': ' + value}}  
+        {{ key + ': ' + value }}  
       </label>
     </p>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex">
-    <button
+    <!-- <button
       type="button"
       class="btn-b-0-20"
       @click="sendInformation()"
@@ -10,8 +10,6 @@
     <button
       type="button"
       class="btn-b-0-20"
-      data-bs-toggle="modal"
-      data-bs-target="#exampleModal"
       @click="editData()"
     >
       <i class="far fa-edit" />
@@ -22,13 +20,32 @@
       @click="deleteData()"
     >
       <i class="fa-solid fa-trash" />
-    </button>
+    </button> -->
+    <OwnButton
+      :class="`btn-b-0-20`"
+      @send-data="sendInformation()"
+      :icon-class="`fa-solid fa-info`"
+      :dfn="true"
+    />
+    <OwnButton
+      :class="`btn-b-0-20`"
+      @send-data="editData()"
+      :icon-class="`far fa-edit`"
+      :dfn="true"
+    />
+    <OwnButton
+      :class="`btn-b-0-20`"
+      @send-data="deleteData()"
+      :icon-class="`fa-solid fa-trash`"
+      :dfn="true"
+    />
   </div>
 </template>
 <script lang="ts" setup>
 import {PropType } from 'vue'
 import {Student} from '@/types/dataTypes/Student'
 import { City } from '@/types/dataTypes/City';
+import OwnButton from '../inputs/OwnButton.vue';
 
 const emit = defineEmits(["clickData","delete","sendData"])
 const props = defineProps({

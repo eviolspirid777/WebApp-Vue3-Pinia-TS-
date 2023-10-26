@@ -12,12 +12,11 @@
           class="label-input"
         >
           <div v-if="key !== 'city' && key !== 'id'">
-            <label>{{ key }}</label>
-            <input
-              v-model="selectedStudent[key]"
-              type="text"
-            >
-            <!-- <owninputway :label-text="key" :model-value="selectedStudent[key]" /> -->
+            <owninputway 
+              :label-text="key" 
+              :model-value="selectedStudent[key]" 
+              @updateValue="updateModelValue(key, $event)"
+            />
           </div>
           <div v-else-if="key === 'city'">
             <label>city:</label>
@@ -35,18 +34,14 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button
-            class="btn-own-cls"
-            @click="close()"
-          >
-            Отмена
-          </button>
-          <button
-            class="btn-own-cls"
-            @click="submit()"
-          >
-            OK
-          </button>
+          <ownbutton
+            :data="`Отмена`"
+            @sendData="close()"
+          />
+          <ownbutton 
+            :data="`OK`"
+            @sendData="submit()"
+          />
         </div>
       </div>
     </div>
@@ -60,6 +55,7 @@ import { Student } from '@/types/dataTypes/Student'
 import multiselect from "vue-multiselect"
 import _ from "lodash"
 import owninputway from "../inputs/OwnInputWay.vue"
+import ownbutton from '../inputs/OwnButton.vue';
 
 const emit = defineEmits(["close"]);
 
@@ -94,6 +90,10 @@ const citiesChecker = () => {
   const cities = citiesStore.cities;
   return Object.keys(cities).length !== 0 ? true : false;
 };
+
+const updateModelValue = (key: string, value: string) => {
+  selectedStudent.value[key] = value;
+}
 
 const cities = computed(() => {
   return getAllCities.value;

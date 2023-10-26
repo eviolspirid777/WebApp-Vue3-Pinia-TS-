@@ -22,18 +22,14 @@
           >
         </div>
         <div class="modal-footer">
-          <button
-            class="btn-own-cls"
-            @click="close()"
-          >
-            Отмена
-          </button>
-          <button
-            class="btn-own-cls"
-            @click="submit()"
-          >
-            OK
-          </button>
+          <OwnButton
+            :data="`Отмена`"
+            @send-data="close()" 
+          />
+          <OwnButton
+            :data="`ОК`"
+            @send-data="submit()"
+          />
         </div>
       </div>
     </div>
@@ -44,6 +40,7 @@
 import { PropType, ref, computed, onMounted } from 'vue';
 import { useCitiesStore } from '@/stores/citiesStore';
 import { City } from '@/types/dataTypes/City';
+import OwnButton from '../inputs/OwnButton.vue';
 
 const emit = defineEmits(["close"]);
 

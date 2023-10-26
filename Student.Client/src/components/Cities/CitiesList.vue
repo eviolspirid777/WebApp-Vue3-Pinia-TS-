@@ -1,13 +1,9 @@
 <template>
   <div>
-    <button
-      id="show-modal"
-      type="button"
-      class="btn-own-cls"
-      @click="showModal = true"
-    >
-      Добавить город
-    </button>
+    <OwnButton 
+      :data="`Добавить город`"
+      @send-data="showModal = true"
+    />
     <ModalForm
       v-if="showModal"
       :selectedcity="selectedCity"
@@ -38,6 +34,7 @@ import MainTable from "../MainTable.vue";
 import ModalForm from "./CityForm.vue";
 import { City } from '@/types/dataTypes/City';
 import CityButtons from '@/components/Slots/CitiesTableSlot.vue'
+import OwnButton from '../inputs/OwnButton.vue';
 
 const citiesStore = useCitiesStore();
 const showModal = ref(false);

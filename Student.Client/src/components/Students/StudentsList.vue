@@ -1,14 +1,10 @@
 <template>
   <div>
     <div class="d-flex flex-row">
-      <button
-        id="show-modal"
-        type="button"
-        class="btn-own-cls"
-        @click="studentFormSwitcher()"
-      >
-        Добавить студента
-      </button>
+      <OwnButton
+        :data="`Добавить студента`"
+        @sendData="studentFormSwitcher()"
+      />
       <StudentForm
         v-if="showModal"
         @close="studentFormSwitcher()"
@@ -30,6 +26,7 @@ import StudentForm from "@/components/Students/StudentForm.vue";
 import TableForm from "@/components/Students/StudentTable.vue";
 import { computed, onMounted, ref } from "vue";
 import { useStudentsStore } from "@/stores/studentsStore";
+import OwnButton from "../inputs/OwnButton.vue";
 
 let studentsStore = useStudentsStore();
 const nameFilter = ref("");

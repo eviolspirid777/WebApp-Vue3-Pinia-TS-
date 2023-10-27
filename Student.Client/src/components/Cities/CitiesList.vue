@@ -13,13 +13,13 @@
       :columns="cities"
       :rows="sendAllCities"
       @delete="deleteCity"
-      @clickData="editCity"
+      @click-data="editCity"
     >
       <template #buttons="propsData">
         <CityButtons
           :data="propsData.data"
           :data-id="propsData.dataId"
-          @clickData="editCity"
+          @click-data="editCity"
           @delete="deleteCity"
         />
       </template>

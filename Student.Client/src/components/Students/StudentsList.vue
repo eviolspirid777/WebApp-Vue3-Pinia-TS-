@@ -3,7 +3,7 @@
     <div class="d-flex flex-row">
       <OwnButton
         :data="`Добавить студента`"
-        @sendData="studentFormSwitcher()"
+        @send-data="studentFormSwitcher()"
       />
       <StudentForm
         v-if="showModal"

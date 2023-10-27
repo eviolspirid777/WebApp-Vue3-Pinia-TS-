@@ -17,6 +17,7 @@ module.exports = {
     rules: {
       'vue/define-props': 'off',
       'vue/define-emits': 'off',
-      'no-undef': 'off'
+      'no-undef': 'off',
+      'vue/require-default-prop': 'off'
     }
 };

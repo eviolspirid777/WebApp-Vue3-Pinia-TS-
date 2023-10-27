@@ -15,7 +15,7 @@
             <owninputway 
               :label-text="key" 
               :model-value="selectedStudent[key]" 
-              @updateValue="updateModelValue(key, $event)"
+              @update-value="updateModelValue(key, $event)"
             />
           </div>
           <div v-else-if="key === 'city'">
@@ -36,11 +36,11 @@
         <div class="modal-footer">
           <ownbutton
             :data="`Отмена`"
-            @sendData="close()"
+            @send-data="close()"
           />
           <ownbutton 
             :data="`OK`"
-            @sendData="submit()"
+            @send-data="submit()"
           />
         </div>
       </div>
@@ -126,7 +126,6 @@ const close = () => {
   emit("close");
 };
 </script>
-
 <style scoped lang="scss">
 .modal {
   &-mask{

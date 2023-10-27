@@ -3,18 +3,18 @@
     <MainTable       
       :columns="tableFields"
       :rows="formattedStudents"
-      @clickData="editStudent"
+      @click-data="editStudent"
       @sort="sortData"
       @refresh="refreshData"
-      @sendData="openInformation"
+      @send-data="openInformation"
       @delete="deleteStudent" 
     >
       <template #buttons="slotProps">
         <StudentTableSlotVue
           :data="slotProps.data"
           :data-id="slotProps.dataId"
-          @clickData="editStudent"
-          @sendData="openInformation"
+          @click-data="editStudent"
+          @send-data="openInformation"
           @delete="deleteStudent"
         />
       </template>

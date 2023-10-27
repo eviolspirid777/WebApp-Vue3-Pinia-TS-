@@ -23,21 +23,21 @@
     </button> -->
     <OwnButton
       :class="`btn-b-0-20`"
-      @send-data="sendInformation()"
       :icon-class="`fa-solid fa-info`"
       :dfn="true"
+      @send-data="sendInformation()"
     />
     <OwnButton
       :class="`btn-b-0-20`"
-      @send-data="editData()"
       :icon-class="`far fa-edit`"
       :dfn="true"
+      @send-data="editData()"
     />
     <OwnButton
       :class="`btn-b-0-20`"
-      @send-data="deleteData()"
       :icon-class="`fa-solid fa-trash`"
       :dfn="true"
+      @send-data="deleteData()"
     />
   </div>
 </template>

@@ -126,7 +126,16 @@ const close = () => {
   emit("close");
 };
 </script>
+<style src="../../scripts/vue-multiselect.css"></style>
 <style scoped lang="scss">
+.multiselect{
+  width: 200px;
+  align-items: center;
+  margin-bottom: 20px; 
+  margin-left: 160px;
+  margin-top: -25px;
+  color: rgba(0, 0, 0, 0.987);
+}
 .modal {
   &-mask{
     position: fixed;
@@ -196,18 +205,18 @@ const close = () => {
 hr{
   color:rgb(46, 73, 108)
 }
-.multiselect {
-  position: fixed;
-  width: 200px;
-  height: 35px;
-  z-index: 9999;
-  margin-bottom: 20px; 
-  margin-left: 160px;
-  margin-top: -25px;
-  font-size: 16px;
-  background-color: rgba(19, 38, 87, 0.308);
-  color: #ffffff;
-}
+// .multiselect {
+//   position: fixed;
+//   width: 200px;
+//   height: 35px;
+//   z-index: 9999;
+//   margin-bottom: 20px; 
+//   margin-left: 160px;
+//   margin-top: -25px;
+//   font-size: 16px;
+//   background-color: rgba(19, 38, 87, 0.308);
+//   color: #ffffff;
+// }
 input {
   width: 200px;
   padding: 5px;

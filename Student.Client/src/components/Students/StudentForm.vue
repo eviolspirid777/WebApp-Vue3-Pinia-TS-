@@ -25,6 +25,7 @@
               v-model="selectedStudent.city.country"
               :options="cities.map(city => city.country)"
               class="multiselect"
+              placeholder="select city"
             />
             <input
               v-else
